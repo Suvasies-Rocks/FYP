@@ -6,7 +6,7 @@ const authRoute = require("./routes/authRoute");
 const courseRoute = require("./routes/courseRoute");
 const adminRoute = require("./routes/adminRoute");
 const userRoute = require("./routes/userRoute");
-
+require("dotenv").config()
 const passport = require("passport");
 const { users, profile } = require("./model/index");
 const generateToken = require("./services/generateToken");
@@ -36,9 +36,8 @@ let GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
 passport.use(
   new GoogleStrategy(
     {
-      clientID:
-        "865350569271-p14232dub2opk00soi7e6rp88ktn7cjm.apps.googleusercontent.com",
-      clientSecret: "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",
+      clientID:process.env.G_CLIENT,
+      clientSecret: process.env.G_SECRET,
       callbackURL: "http://localhost:3000/auth/google/callback",
     },
     function (accessToken, refreshToken, profile, done) {
