@@ -24,8 +24,8 @@ const SingleCourse = () => {
   const [videoDurations, setVideoDurations] = useState([]);
   const [enrolledId, setEnrolledId] = useState([]);
   const [enrolled, setEnrolled] = useState([]);
-  const [isLoading, setIsLoading] = useState(true)
-  const [student, setStudent] = useState({})
+  const [isLoading, setIsLoading] = useState(true);
+  const [student, setStudent] = useState({});
 
   const videoRefs = useRef([]);
 
