@@ -1,3 +1,4 @@
+import Footer from "../../components/Footer";
 import CourseList from "./CourseList";
 
 export default function Home() {
@@ -8,7 +9,7 @@ export default function Home() {
         <div className="lg:flex lg:w-1/2 lg:items-center">
           <div>
             <div className="inline-flex px-2 py-1 mb-2 text-sm font-medium leading-4 text-gray-800 bg-gray-100 border border-gray-200 rounded dark:border-gray-600/50 dark:bg-gray-700/50 dark:text-gray-200">
-            Learn With Us
+              Learn With Us
             </div>
             <h1 className="mb-4 text-4xl font-black text-black dark:text-white">
               Edusphere
@@ -16,14 +17,13 @@ export default function Home() {
                 Nepal
               </span>
             </h1>
-            <h2 className="text-xl font-medium leading-relaxed text-gray-700 dark:text-gray-300">
-            "Unlock Your Learning Potential with EduSphere! 
-            We are committed to delivering exceptional IT education, 
-            empowering students to master skills, achieve certifications,
-             and thrive in their careers. Join us and transform your future today."
-
+            <h2 className="text-xl mb-8 font-medium leading-relaxed text-gray-700 dark:text-gray-300">
+              &quot;Unlock Your Learning Potential with EduSphere! We are
+              committed to delivering exceptional IT education, empowering
+              students to master skills, achieve certifications, and thrive in
+              their careers. Join us and transform your future today.&quot;
             </h2>
-            <div className="flex flex-col justify-center pt-10 pb-16 space-y-2 sm:flex-row sm:items-center sm:space-x-2 sm:space-y-0 lg:justify-start">
+            {/* <div className="flex flex-col justify-center pt-10 pb-16 space-y-2 sm:flex-row sm:items-center sm:space-x-2 sm:space-y-0 lg:justify-start">
               <a
                 href="#"
                 className="inline-flex items-center justify-center space-x-2 rounded-lg border border-blue-700 bg-blue-700 px-7 py-3.5 font-semibold leading-6 text-white hover:border-blue-600 hover:bg-blue-600 hover:text-white focus:ring focus:ring-blue-400 focus:ring-opacity-50 active:border-blue-700 active:bg-blue-700 dark:focus:ring-blue-400 dark:focus:ring-opacity-90"
@@ -46,7 +46,7 @@ export default function Home() {
               >
                 <span>Learn more</span>
               </a>
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="lg:ml-16 lg:flex lg:w-1/2 lg:items-center lg:justify-center">
@@ -66,6 +66,8 @@ export default function Home() {
         </div>
       </div>
       <CourseList />
+
+      <Footer />
     </>
   );
 }

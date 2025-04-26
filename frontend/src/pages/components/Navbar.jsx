@@ -1,12 +1,23 @@
-import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import { baseUrl } from "../../config";
 import axios from "axios";
+import { Avatar } from "@mui/material";
+import ConfirmLogout from "../../components/ConfirmLogout";
 
 const Navbar = () => {
-  const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
   const [teachers, setTeachers] = useState({});
+  const menuRef = useRef(null);
+
+  useEffect(() => {
+    if (teachers) {
+      localStorage.setItem(
+        "user",
+        `${teachers.user?.firstName} ${teachers.user?.lastName}`
+      );
+    }
+  }, [teachers]);
 
   const getAllData = async () => {
     let config = {
@@ -21,7 +32,7 @@ const Navbar = () => {
         setTeachers(response.data);
       }
     } catch (error) {
-      console.error("Error fetching courses:", error.response.data);
+      // console.error("Error fetching courses:", error.response.data);
     }
   };
 
@@ -33,13 +44,32 @@ const Navbar = () => {
     getAllData();
   }, []);
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setShowMenu(false);
+      }
+    };
+
+    if (showMenu) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showMenu]);
+
+
   return (
     <header
       id="page-header"
-      className="relative flex items-center flex-none py-5"
+      className="relative flex items-center flex-none py-5 md:py-8"
     >
       {/* Main Header Content */}
-      <div className="container flex flex-col px-4 mx-auto space-y-4 text-center sm:flex-row sm:items-center sm:justify-between sm:space-y-0 lg:px-8 xl:max-w-7xl">
+      <div className="container flex justify-between items-center px-4 mx-auto  text-center sm:flex-row sm:items-center sm:justify-between sm:space-y-0 lg:px-8 xl:max-w-7xl">
         <div>
           <Link
             to="/"
@@ -64,54 +94,56 @@ const Navbar = () => {
         <div>
           {localStorage.getItem("token") ? (
             <nav className="space-x-3 md:space-x-6 relative">
-              <button
-                onClick={toggleMenu}
-                className="flex items-center text-sm font-semibold text-gray-900 hover:text-blue-600 dark:text-gray-100 dark:hover:text-blue-400 focus:outline-none"
-              >
-                <img
-                  src={
-                    teachers.googlePhoto !== ""
-                      ? teachers.googlePhoto
-                      : baseUrl + "/" + teachers.photoUrl
-                  }
-                  alt="Avatar"
-                  className="w-8 h-8 rounded-full"
-                />
-                <svg
-                  className="w-4 h-4 ml-1 transition-transform transform"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
+              <div ref={menuRef}>
+                <button
+                  onClick={toggleMenu}
+                  className="flex items-center text-sm font-semibold text-gray-900 hover:text-blue-600 dark:text-gray-100 dark:hover:text-blue-400 focus:outline-none"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M19 9l-7 7-7-7"
+                  <Avatar
+                    alt={teachers?.user?.firstName}
+                    src={
+                      teachers.googlePhoto
+                        ? teachers.googlePhoto
+                        : baseUrl + "/" + teachers.photoUrl
+                    }
+                    sx={{ width: 32, height: 32 }}
                   />
-                </svg>
-              </button>
+                  <svg
+                    className="w-4 h-4 ml-1 transition-transform transform"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </button>
 
-              {showMenu && (
-                <div className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md overflow-hidden z-10">
-                  <Link
-                    to="/profile"
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  >
-                    View Profile
-                  </Link>
-                  <Link
-                    onClick={() => {
-                      localStorage.clear();
-                      navigate("/login");
-                    }}
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  >
-                    Logout
-                  </Link>
-                </div>
-              )}
+                {showMenu && (
+                  <div className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md overflow-hidden z-10">
+                    <Link
+                      to="/profile"
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setShowMenu(false);
+                      }}
+                    >
+                      View Profile
+                    </Link>
+                    <div
+                      className="block text-sm text-gray-700 hover:bg-gray-100"
+                    >
+                      <ConfirmLogout showMenu={showMenu} setShowMenu={setShowMenu}/>
+                    </div>
+                  </div>
+                )}
+              </div>
             </nav>
           ) : (
             <nav className="space-x-3 md:space-x-6">

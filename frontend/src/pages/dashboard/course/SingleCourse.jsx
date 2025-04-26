@@ -3,6 +3,7 @@ import axios from "axios";
 import { baseUrl } from "../../../config";
 import { useParams } from "react-router-dom";
 import EnrollmentTable from "./Enrollements";
+import { toast } from "react-toastify";
 
 const SingleCoursePage = () => {
   const [chapterData, setChapterData] = useState([]);
@@ -17,6 +18,8 @@ const SingleCoursePage = () => {
   });
 
   const { id } = useParams();
+
+  console.log(course)
 
   const getAllCategoryData = useCallback(async () => {
     try {
@@ -101,7 +104,7 @@ const SingleCoursePage = () => {
         }
       );
       if (response.status === 200) {
-        alert("Chapter added successfully");
+        toast.success("Chapter added successfully");
         setNewChapterData({
           chapterTitle: "",
           chapterDescription: "",
@@ -113,6 +116,7 @@ const SingleCoursePage = () => {
         getAllCourseChapterData();
       }
     } catch (error) {
+      toast.error(error?.response?.data?.message || "Error adding chapter!");
       console.error("Error adding chapter:", error);
     }
   };
@@ -137,7 +141,7 @@ const SingleCoursePage = () => {
       </div>
 
       {showModal && (
-        <div className="fixed z-10 inset-0 overflow-y-auto flex items-center justify-center">
+        <div className="fixed z-50 inset-0 overflow-y-auto flex items-center justify-center">
           <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
           <div className="relative bg-white rounded-lg p-8 max-w-md mx-auto">
             <form onSubmit={handleChapterSubmit}>

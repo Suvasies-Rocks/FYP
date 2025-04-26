@@ -26,7 +26,6 @@ const CourseList = () => {
       const response = await axios.get(baseUrl + "/get-all-category");
       if (response.status === 200) {
         setCategories(response.data);
-        console.log(response.data);
       }
     } catch (error) {
       console.error("Error fetching courses:", error.response.data);
@@ -50,9 +49,10 @@ const CourseList = () => {
     setPriceRange(event.target.value);
   };
 
+  console.log("categories", teachers);
+
   const renderCourseCards = () => {
     let filteredCourses = teachers;
-
     // Filter by search query
     filteredCourses = filteredCourses.filter((course) =>
       course.courseName.toLowerCase().includes(searchQuery.toLowerCase())
@@ -61,46 +61,52 @@ const CourseList = () => {
     // Filter by category
     if (selectedCategory) {
       filteredCourses = filteredCourses.filter(
-        (course) => course.courseCategory.categoryName === selectedCategory
+        (course) =>
+          course?.courseCategory?.categoryName.toLowerCase().replaceAll(" ","") ===
+          selectedCategory.toLowerCase().replaceAll(" ","")
       );
     }
 
     // Filter by price range
     if (priceRange === "free") {
       filteredCourses = filteredCourses.filter(
-        (course) => course.coursePrice === 0
+        (course) => Number(course.coursePrice) === 0
       );
     } else if (priceRange === "paid") {
       filteredCourses = filteredCourses.filter(
-        (course) => course.coursePrice > 0
+        (course) => Number(course.coursePrice) > 0
       );
     }
 
     return filteredCourses.map((course) => (
       <div
         key={course.id}
-        className="max-w-sm rounded overflow-hidden shadow-2xl  h-[500px]"
+        className="max-w-full rounded overflow-hidden shadow-2xl"
       >
-        <Link to={"/course/" + course.id}>
+        <Link to={"/course/" + course.id} className="flex flex-col gap-y-3 mb-3">
           {/* Course Image */}
-          <img
-            className=" h-[300px] w-[290px]"
-            src={baseUrl + "/" + course.courseImage}
-            alt="Course"
-          />
+          <div>
+            <img
+              className="h-[300px] w-full object-cover"
+              src={baseUrl + "/" + course.courseImage}
+              alt="Course"
+            />
+          </div>
 
           {/* Course Details */}
-          <div className="px-6 py-4">
-            <div className="font-bold text-xl mb-2">{course.courseName}</div>
-            <p className="text-gray-700 text-base">
+          <div className="px-6">
+            <div className="font-bold text-xl mb-1 capitalize">
+              {course.courseName}
+            </div>
+            <p className="text-gray-700 dark:text-gray-300 text-base">
               {course.courseDescription}
             </p>
           </div>
 
           {/* Price */}
-          <div className="px-6 py-4">
+          <div className="px-6">
             <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">
-              Price: ${course.coursePrice}
+              Price: Rs. {course.coursePrice}
             </span>
           </div>
         </Link>
@@ -109,10 +115,10 @@ const CourseList = () => {
   };
 
   return (
-    <>
+    <div className="mb-5">
       <h2 className="text-center text-2xl">Courses</h2>
-      <div className="flex flex-wrap gap-3 pt-10 w-[90%] m-auto min-h-[100vh]">
-        <div className="flex flex-col bg-gray-100 p-4 rounded-md shadow-md h-[200px]">
+      <div className="flex flex-col flex-wrap gap-3 pt-10 w-[90%] m-auto min-h-[100vh]">
+        <div className="flex flex-col bg-gray-100 p-4 rounded-md shadow-md h-[200px] max-w-xl">
           {/* Search Input */}
           <input
             type="text"
@@ -146,10 +152,11 @@ const CourseList = () => {
           </select>
         </div>
 
-        {/* Render Course Cards */}
-        {renderCourseCards()}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+          {renderCourseCards()}
+        </div>
       </div>
-    </>
+    </div>
   );
 };
 

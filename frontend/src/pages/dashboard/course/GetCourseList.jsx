@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { baseUrl } from "../../../config";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const CourseListTable = () => {
   const [teachers, setTeachers] = useState([]);
@@ -144,13 +145,19 @@ const CourseListTable = () => {
         setIsUpdateModalOpen(false);
         getAllData();
       }
+      toast.success("Course updated sucessfully!");
     } catch (error) {
+      toast.success(error.response?.data?.message || "Course updated failed!");
       console.error("Error updating teacher:", error.response.data);
     }
   };
 
   return (
-    <div className="overflow-x-auto pt-10">
+    <div
+      className={`overflow-x-auto pt-10 ${
+        isUpdateModalOpen ? "overflow-y-auto" : "overflow-y-hidden"
+      }`}
+    >
       <table className="table-auto w-full border-collapse">
         <thead>
           <tr>
@@ -164,14 +171,14 @@ const CourseListTable = () => {
           </tr>
         </thead>
         <tbody>
-          {teachers.slice(startIndex, endIndex).map((teacher) => (
+          {teachers.slice(startIndex, endIndex).map((teacher, i) => (
             <tr key={teacher.id}>
-              <td>
+              <td className="text-center text-blue-500">
                 <Link to={`/teacherDashboard/getCourse/${teacher.id}`}>
-                  {teacher.id}
+                  {i + 1}.
                 </Link>
               </td>
-              <td>{teacher.courseName}</td>
+              <td className="capitalize">{teacher.courseName}</td>
               <td>{teacher.courseDescription}</td>
               <td>
                 <img
@@ -181,14 +188,14 @@ const CourseListTable = () => {
                 />
               </td>
               <td>{teacher.coursePrice}</td>
-              <td>
+              <td className="capitalize">
                 {" "}
                 <input type="checkbox" checked={teacher.isVerified} />
                 {teacher.isVerified ? "verified" : "unverified"}
               </td>
               <td>
                 <button
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2"
+                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mb-2 rounded mr-2"
                   onClick={() => handleEdit(teacher)}
                 >
                   Edit
@@ -221,7 +228,7 @@ const CourseListTable = () => {
       {/* Update Modal */}
       {selectedTeacher && (
         <div
-          className={`fixed z-10 inset-0 overflow-y-auto ${
+          className={`fixed z-40 inset-0 overflow-y-auto ${
             isUpdateModalOpen ? "block" : "hidden"
           }`}
         >

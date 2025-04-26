@@ -1,27 +1,31 @@
 const nodemailer = require("nodemailer");
 
+const email = process.env.USER_EMAIL;
+const password = process.env.USER_PASSWORD;
+
 async function sendEmail(recipientEmail, resetLink) {
   console.log(recipientEmail, "hehe");
   // Create a transporter
   const transporter = nodemailer.createTransport({
-    host: "smtp.ethereal.email",
-    port: 587,
+    service: "gmail",
+    pool: true,
+    maxConnections: 20,
     auth: {
-      user: "candace.berge13@ethereal.email",
-      pass: "5Y5YPV3G3x1thu9Z2x",
+      user: email,
+      pass: password,
     },
   });
 
   // Email options
   let mailOptions = {
-    from: "jansujerry12@gmail.com", // Sender address
+    from: email, // Sender address
     to: recipientEmail, // List of recipients
     subject: "Password Reset Link", // Subject line
     text: "Here is your password reset link: " + resetLink, // Plain text body
     html:
       '<p>Here is your password reset link: <a href="' +
       resetLink +
-      '">Reset Password</a></p>', // HTML body content
+      '" target="_blank">Reset Password</a></p>', // HTML body content
   };
 
   // Send email

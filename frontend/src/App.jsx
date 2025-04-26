@@ -28,58 +28,75 @@ import RequireAuth from "./pages/protectedRoutes";
 import UnauthorizedPage from "./pages/Unauthorize";
 import ForgotPassword from "./pages/auth/ForgetPassord";
 import ChangePassword from "./pages/auth/ChangePassword";
+import { createContext, useState } from "react";
+import { PaymentProtectedRoute } from "./pages/home/protected/PaymentProtectedRoute";
+import PaymentSuccessPage from "./pages/home/PaymentSuccess";
+import PaymentFailurePage from "./pages/home/PaymentFailure";
 
-
+export const PaymentContext = createContext();
 
 function App() {
+  const [isPaying, setIsPaying] = useState(null);
+
   return (
     <BrowserRouter>
-      <ToastContainer />
-      <Routes>
-        <Route path="/register" element={<Register />} />
-
-        
-        <Route path="/login" element={<Login />} />
-        <Route path="/request" element={<ForgotPassword />} />
-        <Route path="/password-reset" element={<ChangePassword />} />
-
-        <Route path="/unauthorize" element={<UnauthorizedPage />} />
-
-        <Route path="/google" element={<Google />} />
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="course/:id" element={<SIngleCourse />} />
-          <Route path="profile" element={<UserProfilePage />} />
-
-          
-
-        </Route>
-        <Route path="/" element={<RequireAuth isAllowed={["teacher"]} />}>
-          <Route path="/teacherDashboard/" element={<TeacherDashboard />}>
-            <Route path="" element={<HomeTeacherDashboard />} />
-            <Route path="addCourse" element={<AddCourseForm />} />
-            <Route path="getCourse" element={<CourseListTable />} />
-            <Route path="getCourse/:id" element={<SingleCoursePage />} />
+      <ToastContainer/>
+      <PaymentContext.Provider value={{ isPaying, setIsPaying }}>
+        <Routes>
+          <Route
+            path="/paymentsuccess"
+            element={
+              <PaymentProtectedRoute>
+                <PaymentSuccessPage />
+              </PaymentProtectedRoute>
+            }
+          />
+          <Route
+            path="/paymentfailure"
+            element={
+              <PaymentProtectedRoute>
+                <PaymentFailurePage />
+              </PaymentProtectedRoute>
+            }
+          />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/forgotPassword" element={<ForgotPassword />} />
+          <Route path="/password-reset" element={<ChangePassword />} />
+          <Route path="/unauthorize" element={<UnauthorizedPage />} />
+          <Route path="/google" element={<Google />} />
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route path="course/:id" element={<SIngleCourse />} />
+            <Route path="profile" element={<UserProfilePage />} />
           </Route>
-        </Route>
-        <Route path="/" element={<RequireAuth isAllowed={["admin"]} />}>
-          <Route path="/dashboard/" element={<Dashboard />}>
-            <Route path="" element={<HomeDashboard />} />
-            <Route path="addTeacher" element={<AddTeacherAdminForm />} />
-            <Route path="teachers" element={<TeacherListTable />} />
-            <Route
-              path="updateTeacher/:id"
-              element={<UpdateTeacherAdminForm />}
-            />
-
-            <Route path="addCategory" element={<AddCategory />} />
-            <Route path="categories" element={<CategoryListTable />} />
-
-            <Route path="courses" element={<CourseListTableAdmin />} />
-            <Route path="addChapter" element={<AddChapter />} />
+          <Route path="/" element={<RequireAuth isAllowed={["teacher"]} />}>
+            <Route path="/teacherDashboard/" element={<TeacherDashboard />}>
+              <Route path="" element={<HomeTeacherDashboard />} />
+              <Route path="addCourse" element={<AddCourseForm />} />
+              <Route path="getCourse" element={<CourseListTable />} />
+              <Route path="getCourse/:id" element={<SingleCoursePage />} />
+            </Route>
           </Route>
-        </Route>
-      </Routes>
+          <Route path="/" element={<RequireAuth isAllowed={["admin"]} />}>
+            <Route path="/dashboard/" element={<Dashboard />}>
+              <Route path="" element={<HomeDashboard />} />
+              <Route path="addTeacher" element={<AddTeacherAdminForm />} />
+              <Route path="teachers" element={<TeacherListTable />} />
+              <Route
+                path="updateTeacher/:id"
+                element={<UpdateTeacherAdminForm />}
+              />
+
+              <Route path="addCategory" element={<AddCategory />} />
+              <Route path="categories" element={<CategoryListTable />} />
+
+              <Route path="courses" element={<CourseListTableAdmin />} />
+              <Route path="addChapter" element={<AddChapter />} />
+            </Route>
+          </Route>
+        </Routes>
+      </PaymentContext.Provider>
     </BrowserRouter>
   );
 }

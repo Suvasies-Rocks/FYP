@@ -49,15 +49,15 @@ const UserProfilePage = () => {
   }, []);
 
   return (
-    <div className="container mx-auto mt-8">
-      <div className="flex flex-col ">
+    <div className="container mx-auto mt-8 p-6">
+      <div className="flex flex-col gap-x-4 gap-y-8">
         {/* User Details */}
-        <div className="md:w-1/3">
+        <div className="justify-self-start">
           <UserDetails teachers={teachers} getAllData={getAllData} />
         </div>
 
         {/* Courses Tabs */}
-        <div className="md:w-2/3">
+        <div className="lg:w-2/3">
           <CoursesTabs courses={enrolled.enrollments} />
           {/* Content for enrolled/completed courses will go here */}
         </div>
