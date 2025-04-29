@@ -32,7 +32,7 @@ export default function PaymentFailurePage() {
     toast.error("Payment Failure");
     const timeout = setTimeout(() => {
       clearPaymentData();
-      navigate(userInfo?.endpoint || "/");
+      navigate(`/course/${userInfo?.endpoint}` || "/");
     }, 30000);
 
     return () => clearTimeout(timeout);
