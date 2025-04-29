@@ -50,7 +50,6 @@ const CompletedCourses = ({ courses }) => {
     getChapterProgress();
   }, []);
 
-  console.log("ch", chapterProgress);
 
   return (
     <div>
@@ -63,9 +62,7 @@ const CompletedCourses = ({ courses }) => {
             <th className="px-4 py-2 border">Chapter Progress</th>
           </tr>
         </thead>
-        {/* <p>
-            {localStorage.getItem(`video_progress_profile${course.course.id}`)}%
-          </p> */}
+
         <tbody>
           {courses?.map((course) => (
             <tr key={course.id} className="border-t">

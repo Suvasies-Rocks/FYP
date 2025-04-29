@@ -1,5 +1,3 @@
-import React from 'react';
-
 const EnrollmentTable = ({ enrollments }) => {
   return (
     <table>
@@ -15,15 +13,19 @@ const EnrollmentTable = ({ enrollments }) => {
         </tr>
       </thead>
       <tbody>
-        {enrollments.map(enrollment => (
+        {enrollments.map((enrollment) => (
           <tr key={enrollment.id}>
             <td>{enrollment.id}</td>
-            <td>{new Date(parseInt(enrollment.enrollDate)).toLocaleString()}</td>
-            <td>{enrollment.paymentStatus ? 'Paid' : 'Unpaid'}</td>
+            <td>
+              {new Date(parseInt(enrollment.enrollDate)).toLocaleString()}
+            </td>
+            <td>{enrollment.paymentStatus ? "Paid" : "Unpaid"}</td>
             <td>{new Date(enrollment.createdAt).toLocaleString()}</td>
             <td>{enrollment.course.courseName}</td>
             <td>{enrollment.user.email}</td>
-            <td>{enrollment.user.firstName} {enrollment.user.lastName}</td>
+            <td>
+              {enrollment.user.firstName} {enrollment.user.lastName}
+            </td>
           </tr>
         ))}
       </tbody>

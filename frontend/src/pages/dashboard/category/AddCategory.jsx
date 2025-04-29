@@ -8,7 +8,6 @@ const AddCategory = () => {
   const nav = useNavigate();
 
   const [category, setCategory] = useState("");
-  // const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     let config = {
@@ -31,11 +30,8 @@ const AddCategory = () => {
         toast.success("success", response.data.message);
         nav("/dashboard/categories");
       }
-      console.log("Teacher added successfully:", response.data);
-      // You can show a success message or redirect the user to another page
     } catch (error) {
       console.error("Error adding teacher:", error.response.data);
-      // You can show an error message to the user
     }
   };
   return (
@@ -81,15 +77,7 @@ const AddCategory = () => {
 
                   <div>
                     <div className="flex items-center justify-between mb-5 space-x-2">
-                      {/* <label className="flex items-center"> */}
-                      {/* <input
-                        type="checkbox"
-                        id="remember_me"
-                        name="remember_me"
-                        className="text-blue-500 border border-gray-200 rounded size-4 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 dark:border-gray-600 dark:bg-gray-800 dark:ring-offset-gray-900 dark:checked:border-transparent dark:checked:bg-blue-500 dark:focus:border-blue-500"
-                      />
-                      <span className="ml-2 text-sm">Remember me</span>
-                    </label> */}
+  
                     </div>
                     <button
                       type="submit"
@@ -110,21 +98,16 @@ const AddCategory = () => {
                       </svg>
                       <span>Add Category</span>
                     </button>
-                    {/* Divider: With Label */}
 
-                    {/* END Divider: With Label */}
                   </div>
                 </form>
               </div>
             </div>
-            {/* END Sign In Form */}
 
-            {/* END Footer */}
           </section>
-          {/* END Sign In Section */}
         </div>
       </main>
-      {/* END Page Content */}
+     
     </div>
   );
 };

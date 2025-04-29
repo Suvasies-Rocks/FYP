@@ -29,7 +29,7 @@ export default function PaymentFailurePage() {
   };
 
   useEffect(() => {
-    toast.error("Payment Failure")
+    toast.error("Payment Failure");
     const timeout = setTimeout(() => {
       clearPaymentData();
       navigate(userInfo?.endpoint || "/");
@@ -50,7 +50,8 @@ export default function PaymentFailurePage() {
             Payment Failed
           </h1>
           <p className="text-gray-600">
-            Sorry {userInfo?.name || "User"}, your payment could not be processed.
+            Sorry {userInfo?.name || "User"}, your payment could not be
+            processed.
           </p>
         </div>
 

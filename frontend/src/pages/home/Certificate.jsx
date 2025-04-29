@@ -37,7 +37,7 @@ const Certificate = ({
           transform: `scale(${scale})`,
           transformOrigin: "top left",
         },
-        bgcolor: "#ffffff", // Ensure white background
+        bgcolor: "#ffffff", 
         cacheBust: true,
       });
 

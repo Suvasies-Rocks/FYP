@@ -44,7 +44,6 @@ const CourseList = () => {
         className="max-w-full rounded overflow-hidden shadow-2xl "
       >
         <Link to={"/course/" + course.id}>
-          {/* Course Image */}
           <img
             className=" h-[300px] w-full object-cover"
             src={baseUrl + "/" + course.courseImage}

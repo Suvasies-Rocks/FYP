@@ -46,7 +46,6 @@ const AddCourseForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateForm()) {
-      // Form is valid, proceed with submission
       let config = {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -72,7 +71,6 @@ const AddCourseForm = () => {
       } catch (error) {
         toast.error(error.response?.data?.message || "Error adding course!");
         console.error("Error adding course:", error.response);
-        // You can show an error message to the user
       }
     }
   };

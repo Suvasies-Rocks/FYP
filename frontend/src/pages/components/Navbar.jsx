@@ -32,7 +32,7 @@ const Navbar = () => {
         setTeachers(response.data);
       }
     } catch (error) {
-      // console.error("Error fetching courses:", error.response.data);
+      console.error("Error fetching courses:", error.response.data);
     }
   };
 
@@ -163,7 +163,6 @@ const Navbar = () => {
           )}
         </div>
       </div>
-      {/* END Main Header Content */}
     </header>
   );
 };

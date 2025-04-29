@@ -19,12 +19,6 @@ const { isAuthenticated } = require("../middleware/isAuthenticated");
 const multer = require("multer");
 
 const router = require("express").Router();
-var requestp = require("request-promise");
-const { payment } = require("../model");
-
-var KHALTI_VERIFY = "https://khalti.com/api/v2/payment/verify/";
-// var secret_key = process.env.KHALTI_SECRET_KEY;
-var SECRET_KEY = "test_secret_key_0e92d34825544efa8073e9ba124528c5";
 
 // Multer setup for image uploads
 const imageStorage = multer.diskStorage({

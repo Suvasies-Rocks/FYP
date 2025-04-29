@@ -1,6 +1,4 @@
 import { useState } from "react";
-import { baseUrl } from "../../../config";
-import axios from "axios";
 
 const AddChapter = () => {
   const [data, setData] = useState({
@@ -17,11 +15,7 @@ const AddChapter = () => {
       [name]: value,
     });
   };
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const response = await axios.post(`${baseUrl}chapter`, data);
-  };
-  console.log(data);
+
   return (
     <div
       id="page-container"
@@ -34,7 +28,6 @@ const AddChapter = () => {
           <section className="w-full max-w-xl py-6">
             {/* Header */}
 
-            {/* END Header */}
 
             {/* Sign In Form */}
             <div className="flex flex-col overflow-hidden bg-white rounded-lg shadow-sm dark:bg-gray-800 dark:text-gray-100">
@@ -142,21 +135,17 @@ const AddChapter = () => {
                       </svg>
                       <span>Add Chapters</span>
                     </button>
-                    {/* Divider: With Label */}
 
-                    {/* END Divider: With Label */}
                   </div>
                 </form>
               </div>
             </div>
-            {/* END Sign In Form */}
 
-            {/* END Footer */}
           </section>
-          {/* END Sign In Section */}
+        
         </div>
       </main>
-      {/* END Page Content */}
+    
     </div>
   );
 };

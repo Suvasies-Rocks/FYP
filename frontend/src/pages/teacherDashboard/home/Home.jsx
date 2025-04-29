@@ -38,7 +38,6 @@ const HomeTeacherDashboard = () => {
     return sum + course.enrolls.length;
   }, 0);
 
-  console.log(totalEnrolls);
   return (
     <div>
       <div className="container mx-auto p-4">

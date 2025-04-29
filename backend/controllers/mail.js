@@ -4,7 +4,6 @@ const email = process.env.USER_EMAIL;
 const password = process.env.USER_PASSWORD;
 
 async function sendEmail(recipientEmail, resetLink) {
-  console.log(recipientEmail, "hehe");
   // Create a transporter
   const transporter = nodemailer.createTransport({
     service: "gmail",
@@ -31,7 +30,6 @@ async function sendEmail(recipientEmail, resetLink) {
   // Send email
   try {
     let info = await transporter.sendMail(mailOptions);
-    console.log("Message sent: %s", info.messageId);
     return info;
   } catch (error) {
     console.error("Error sending email:", error);

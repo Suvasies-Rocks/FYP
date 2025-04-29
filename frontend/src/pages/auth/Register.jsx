@@ -14,7 +14,6 @@ const Register = () => {
   });
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log(name, value);
     setData({
       ...data,
       [name]: value,
@@ -130,13 +129,10 @@ const Register = () => {
                   </a>
                 </p>
               </div>
-              {/* Footer */}
             </div>
           </div>
-          {/* END Box */}
         </div>
       </div>
-      {/* END Checkout Section: Simple Box */}
     </>
   );
 };

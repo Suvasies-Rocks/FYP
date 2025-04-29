@@ -30,15 +30,15 @@ const RatingModal = ({ onClose, fetchDataComment }) => {
       toast.success("success", response.data.message);
       fetchDataComment();
     }
-    onClose(); // Close the modal after submission
+    onClose(); 
   };
 
-  // Function to handle star click
+
   const handleStarClick = (value) => {
     setRating(value);
   };
 
-  // Function to generate stars
+
   const renderStars = () => {
     const stars = [];
     for (let i = 1; i <= 5; i++) {
@@ -58,7 +58,7 @@ const RatingModal = ({ onClose, fetchDataComment }) => {
   };
 
   return (
-    // <Modal onClose={onClose}>
+    
     <div className="flex flex-col items-center">
       <h2 className="text-2xl font-bold mb-4">Rate this chapter</h2>
       <div className="flex mb-4">{renderStars()}</div>
@@ -78,7 +78,7 @@ const RatingModal = ({ onClose, fetchDataComment }) => {
         </button>
       </form>
     </div>
-    // </Modal>
+  
   );
 };
 

@@ -59,7 +59,6 @@ const UserProfilePage = () => {
         {/* Courses Tabs */}
         <div className="lg:w-2/3">
           <CoursesTabs courses={enrolled.enrollments} />
-          {/* Content for enrolled/completed courses will go here */}
         </div>
       </div>
     </div>
